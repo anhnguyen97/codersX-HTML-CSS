@@ -1,0 +1,38 @@
+<!-- 
+- Sử dụng getElementsByTagName() để lấy ra danh sách các <p> có class là 'foo'
+- Lặp qua các phần tử và thay đổi nội dung của từng phần tử bằng cách append (thêm vào cuối) một đường link tới coders.tokyo site
+-->
+<html>
+
+<head></head>
+
+<body>
+    <div class="container">
+        <div>
+            <p class="foo">foo1 </p>
+        </div>
+        <div>
+            <p class="bar">bar</p>
+        </div>
+        <div>
+            <p class="foo">foo2 </p>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var pList = Array.from(document.getElementsByTagName("p"));
+    var foo = pList.filter(function(element) {
+        return element.classList.contains('foo');
+    });
+    var coders_link = "https://coders-x.com/";
+
+
+    foo.map(function(el) {
+        var link = document.createElement('a');
+        link.setAttribute('href', coders_link);
+        link.innerText = "coders.tokyo";
+        return el.appendChild(link);
+    });
+    </script>
+</body>
+
+</html>

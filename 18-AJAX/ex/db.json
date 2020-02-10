@@ -1,0 +1,49 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Tony",
+      "age": 20
+    },
+    {
+      "id": 2,
+      "name": "John",
+      "age": 21
+    },
+    {
+      "id": 3,
+      "name": "Jack",
+      "age": 22
+    },
+    {
+      "id": 4,
+      "name": "Tung",
+      "age": 20
+    },
+    {
+      "id": 5,
+      "name": "Anh",
+      "age": 22
+    },
+    {
+      "name": "Cao Son",
+      "age": 23,
+      "id": 6
+    },
+    {
+      "id": 8,
+      "name": {},
+      "age": {}
+    },
+    {
+      "id": 9,
+      "name": "Nguyễn Trung Anh",
+      "age": "21"
+    },
+    {
+      "id": 10,
+      "name": "Pham Huynh",
+      "age": "23"
+    }
+  ]
+}

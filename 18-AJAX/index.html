@@ -1,0 +1,84 @@
+<!-- $0.addEventListener (Observer design pattern) -->
+<!-- Design pattern -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TODO list</title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <input type="text" name="" value="" placeholder="" id="new-item">
+    <button type="" id="add-btn">Add</button>
+    <ul id="todo-list">
+    </ul>
+    <!-- internal script -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+    var url = 'http://localhost:9081/todos';
+    axios.get(url).then(function(res) {
+        var item = res.data;
+        // console.log("Data loaded...", item);
+        render(item);
+    })
+
+    var addBtn = document.getElementById('add-btn');
+    // addBtn.onclick = addItem;
+    addBtn.addEventListener('click', addItem);
+    addBtn.addEventListener('click', function() {
+        console.log("Add button is clicked");
+    }); //anonynous function
+    // addBtn triggers a click event
+    // event listener
+
+    var input = document.getElementById("new-item");
+    input.value = sessionStorage.getItem('draft');
+
+    input.addEventListener('change', updateSessionStorage);
+
+    function updateSessionStorage() {
+        sessionStorage.setItem('draft', input.value);
+    }
+
+    function addItem() {
+        //get value of the input
+        var newItem = input.value;
+
+        // add to todoLisr arr
+        todoList.push(newItem);
+
+        //render
+        render();
+
+        // clear input
+        input.value = "";
+
+        //store data
+        localStorage.setItem(storageKey, JSON.stringify(todoList));
+    }
+
+    function render(items) {
+        var htmlList = document.getElementById('todo-list');
+        var content = items.map(function(item) {
+            return '<li>' + item.content + '</li>';
+        });
+
+        htmlList.innerHTML = content.join("");
+    }
+
+
+    fetch(new Request('https://randomuser.me/api/')).then(function(res) {
+        return res.json();
+    }).then(function(data) {
+        document.write(JSON.stringify(data));
+    })
+
+
+    // render();
+    </script>
+</body>
+
+</html>

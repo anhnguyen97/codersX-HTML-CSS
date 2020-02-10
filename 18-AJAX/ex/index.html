@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>exam</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="addnew">
+            <span>Name:</span><input type="text" name="name" id="input-name">
+            <span>Age:</span><input type="number" name="age" id="input-age">
+            <input type="button" name="" value="Add" class="add-user" id="add-user">
+        </div>
+        <br>
+        <table id="user-table">
+        </table>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+    var userTable = document.getElementById("user-table");
+    var userData, inputName, inputAge;
+    var maxId;
+    const dbLink = 'http://localhost:3000/users';
+
+    //Get data from json-server
+    axios.get(dbLink)
+        .then(function(res) {
+            userData = res.data;
+            maxId = getMaxID();
+            render(res.data);
+        })
+
+    //Render data
+    function render(users) {
+        var content = users.map(function(user) {
+            return '<tr><td>' + user.id + '</td><td>' + user.name + '</td><td>' + user.age + '</td><tr>'
+        }).join("");
+        userTable.innerHTML = content;
+    }
+
+    //Get max Id
+    function getMaxID() {
+        return userData.reduce(function(init, user) {
+            return init > user.id ? init : user.id;
+        }, 0)
+    }
+
+
+    var addBtn = document.getElementById('add-user');
+    addBtn.addEventListener("click", addUser);
+
+    //add new user to db
+    function addUser() {
+        inputName = document.getElementById('input-name').value;
+        inputAge = document.getElementById('input-age').value;
+        if (inputName && inputAge) {
+            axios.post(dbLink, {
+            	id: maxId+1,
+            	name: inputName,
+            	age: inputAge
+            }).then(function(response) {
+                // console.log(response.data);
+                userData.push(response.data);
+                getMaxID();
+                render(userData);
+            }).catch(function(err) {
+                console.log(err)
+            })
+
+        } else {
+            alert("Name and Age are required");
+        }
+    }
+
+    //Edit an user
+    // axios.put(dbLink+"/6", {
+    // 	name: "Cao Son",
+    // 	age: 23
+    // }).then(function(response){
+    // 	getMaxID();
+    // })
+
+    // DELETE an user.
+	// axios.delete(dbLink+"/7").then((response) => { console.log(response.data) }).catch((error) => { console.log(error) });
+
+
+    </script>
+</body>
+
+</html>
